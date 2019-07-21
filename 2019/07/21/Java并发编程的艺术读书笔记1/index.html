@@ -79,13 +79,19 @@
 
 
 
-<meta property="og:type" content="website">
+<meta name="description" content="第一章 并发编程的挑战开篇第一句话就说明了并发编程的目的：为了让程序运行得更快。但是，并不是启动的线程越多，运行越快。启动多线程，**会增加线程创建和上下分切换的开销**，实验表明：在循环次数较少时，不如直接使用单线程。   循环次数 串行执行时间 /ms 并发执行时间 并发比串行快多少    1亿 130 77 约1倍   1千万 18 9 约1倍   1百万 5 5 差不多   10万 4 3">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Welcome to JianZhirui&#39;s Blog">
-<meta property="og:url" content="https://RyanUaa.github.io/index.html">
+<meta property="og:url" content="https://RyanUaa.github.io/2019/07/21/Java并发编程的艺术读书笔记1/index.html">
 <meta property="og:site_name" content="Welcome to JianZhirui&#39;s Blog">
+<meta property="og:description" content="第一章 并发编程的挑战开篇第一句话就说明了并发编程的目的：为了让程序运行得更快。但是，并不是启动的线程越多，运行越快。启动多线程，**会增加线程创建和上下分切换的开销**，实验表明：在循环次数较少时，不如直接使用单线程。   循环次数 串行执行时间 /ms 并发执行时间 并发比串行快多少    1亿 130 77 约1倍   1千万 18 9 约1倍   1百万 5 5 差不多   10万 4 3">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://images0.cnblogs.com/blog/28306/201402/191145372245230.png">
+<meta property="og:updated_time" content="2019-07-21T11:08:08.034Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Welcome to JianZhirui&#39;s Blog">
+<meta name="twitter:description" content="第一章 并发编程的挑战开篇第一句话就说明了并发编程的目的：为了让程序运行得更快。但是，并不是启动的线程越多，运行越快。启动多线程，**会增加线程创建和上下分切换的开销**，实验表明：在循环次数较少时，不如直接使用单线程。   循环次数 串行执行时间 /ms 并发执行时间 并发比串行快多少    1亿 130 77 约1倍   1千万 18 9 约1倍   1百万 5 5 差不多   10万 4 3">
+<meta name="twitter:image" content="https://images0.cnblogs.com/blog/28306/201402/191145372245230.png">
 
 
 
@@ -115,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://RyanUaa.github.io/">
+  <link rel="canonical" href="https://RyanUaa.github.io/2019/07/21/Java并发编程的艺术读书笔记1/">
 
 
 
 
 
-  <title>Welcome to JianZhirui's Blog</title>
+  <title> | Welcome to JianZhirui's Blog</title>
   
 
 
@@ -140,8 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -214,163 +219,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://RyanUaa.github.io/2019/07/21/折腾博客的第一天/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JianZhirui">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome to JianZhirui's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/21/折腾博客的第一天/" itemprop="url">Untitled</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-21T19:08:57+08:00">
-                2019-07-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="第一天"><a href="#第一天" class="headerlink" title="第一天"></a>第一天</h1><h2 id="下载必备资源"><a href="#下载必备资源" class="headerlink" title="下载必备资源"></a>下载必备资源</h2><ul>
-<li>Hexo 一个博客框架</li>
-<li>Git</li>
-<li>Node.js （至少是6.9，安装途中选中安装npm）</li>
-</ul>
-<h2 id="初始化博客"><a href="#初始化博客" class="headerlink" title="初始化博客"></a>初始化博客</h2><ol>
-<li><p>新建一个文件夹</p>
-</li>
-<li><p>执行以下代码，初始化博客文件夹</p>
-<blockquote>
-<p><code>$ hexo init &lt;folder&gt;</code></p>
-<p><code>$ cd &lt;folder&gt;</code></p>
-<p><code>$ npm instll</code></p>
-</blockquote>
-</li>
-<li><p>执行以下文件，创建测试博文，并启动本地预览服务器</p>
-<blockquote>
-<p><code>$ hexo new test_blog</code></p>
-<p><code>$ hexo g</code></p>
-<p><code>$ hexo s</code></p>
-</blockquote>
-</li>
-<li><p>在本地浏览器打开 <em>localhost:4000</em>，可以显示如下页面，博客初步完成</p>
-<p><img src="C:%5CUsers%5CAdministrator%5CDocuments%5Cnotebook%5Cpic%5Cnew_test_blog.png" alt="new_test_blog"></p>
-</li>
-</ol>
-<h2 id="一些常用的Hexo命令"><a href="#一些常用的Hexo命令" class="headerlink" title="一些常用的Hexo命令"></a>一些常用的Hexo命令</h2><blockquote>
-<p>npm install hexo -g #安装Hexo<br>npm update hexo -g #升级<br>hexo init #初始化博客</p>
-<p>命令简写<br>hexo n “我的博客” == hexo new “我的博客” #新建文章<br>hexo g == hexo generate #生成<br>hexo s == hexo server #启动服务预览<br>hexo d == hexo deploy #部署</p>
-<p>hexo server #Hexo会监视文件变动并自动更新，无须重启服务器<br>hexo server -s #静态模式<br>hexo server -p 5000 #更改端口<br>hexo server -i 192.168.1.1 #自定义 IP<br>hexo clean #清除缓存，若是网页正常情况下可以忽略这条命令  </p>
-</blockquote>
-<h2 id="初始化git仓库-todo-图床的使用"><a href="#初始化git仓库-todo-图床的使用" class="headerlink" title="初始化git仓库 //todo 图床的使用"></a>初始化git仓库 //todo 图床的使用</h2><ol>
-<li>在GitHub创建一个新的仓库，命名为XXXX.github.io(XXXX为你的GitHub账户名称)</li>
-<li>创建一个</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -400,9 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/21/Java并发编程的艺术读书笔记1/" itemprop="url">Untitled</a></h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -452,9 +301,7 @@
       
 
       
-        
-          
-            <h1 id="第一章-并发编程的挑战"><a href="#第一章-并发编程的挑战" class="headerlink" title="第一章 并发编程的挑战"></a>第一章 并发编程的挑战</h1><pre><code>开篇第一句话就说明了并发编程的目的：为了让程序运行得更快。但是，并不是启动的线程越多，运行越快。启动多线程，**会增加线程创建和上下分切换的开销**，实验表明：在循环次数较少时，不如直接使用单线程。</code></pre><table>
+        <h1 id="第一章-并发编程的挑战"><a href="#第一章-并发编程的挑战" class="headerlink" title="第一章 并发编程的挑战"></a>第一章 并发编程的挑战</h1><pre><code>开篇第一句话就说明了并发编程的目的：为了让程序运行得更快。但是，并不是启动的线程越多，运行越快。启动多线程，**会增加线程创建和上下分切换的开销**，实验表明：在循环次数较少时，不如直接使用单线程。</code></pre><table>
 <thead>
 <tr>
 <th align="center"><strong>循环次数</strong></th>
@@ -525,8 +372,6 @@
 </li>
 </ol>
 
-          
-        
       
     </div>
     
@@ -543,144 +388,32 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://RyanUaa.github.io/2019/07/18/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JianZhirui">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome to JianZhirui's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/18/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-18T13:27:15+08:00">
-                2019-07-18
-              </time>
+              <a href="/2019/07/18/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
+              <a href="/2019/07/21/折腾博客的第一天/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -690,10 +423,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -701,6 +435,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -721,8 +459,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -764,6 +511,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-并发编程的挑战"><span class="nav-number">1.</span> <span class="nav-text">第一章 并发编程的挑战</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -904,6 +667,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
