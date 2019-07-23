@@ -229,6 +229,125 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://RyanUaa.github.io/2019/07/23/Java并发编程的艺术读书笔记2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JianZhirui">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to JianZhirui's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/23/Java并发编程的艺术读书笔记2/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-23T09:00:42+08:00">
+                2019-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://RyanUaa.github.io/2019/07/21/折腾博客的第一天/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -454,7 +573,7 @@
       
         
           
-            <h1 id="第一章-并发编程的挑战"><a href="#第一章-并发编程的挑战" class="headerlink" title="第一章 并发编程的挑战"></a>第一章 并发编程的挑战</h1><pre><code>开篇第一句话就说明了并发编程的目的：为了让程序运行得更快。但是，并不是启动的线程越多，运行越快。启动多线程，**会增加线程创建和上下分切换的开销**，实验表明：在循环次数较少时，不如直接使用单线程。</code></pre><table>
+            <h1 id="第一章-并发编程的挑战"><a href="#第一章-并发编程的挑战" class="headerlink" title="第一章 并发编程的挑战"></a>第一章 并发编程的挑战</h1><h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><pre><code>开篇第一句话就说明了并发编程的目的：为了**让程序运行得更快**。但是，并不是启动的线程越多，运行越快。启动多线程，**会增加线程创建和上下文切换的开销**，实验表明：在循环次数较少时，不如直接使用单线程。</code></pre><table>
 <thead>
 <tr>
 <th align="center"><strong>循环次数</strong></th>
@@ -508,20 +627,48 @@
 <blockquote>
 <p> 度量上下文切换的工具：</p>
 <ol>
-<li><p>Lmbench 度量时长</p>
+<li><p>Lmbench，度量时长</p>
 </li>
-<li><p>vmstat 度量次数</p>
+<li><p>vmstat，度量次数</p>
 </li>
 </ol>
 </blockquote>
-<p>减少上下文切换的方法：</p>
-<ol>
+<h2 id="减少上下文切换的方法："><a href="#减少上下文切换的方法：" class="headerlink" title="减少上下文切换的方法："></a>减少上下文切换的方法：</h2><ol>
 <li><p>无锁并发编程。多线程竞争锁时，会加快上下文切换的频率，用一些方法来避免使用锁。比如将数据的ID通过Hash算法取模分段，不同的线程处理不同的数据。</p>
 </li>
 <li><p>CAS算法。<em>Compare and Swap</em>)</p>
 <p><img src="https://images0.cnblogs.com/blog/28306/201402/191145372245230.png" alt="CAS"></p>
 </li>
-<li><p>使用协程</p>
+<li><p>使用协程，在用户态通过子程序实现的类似CPU调度，每个子程序都是可以随时中断。</p>
+<blockquote>
+<p><strong>协程的优势：</strong></p>
+<ul>
+<li>最大的优势就是协程极高的执行效率。因为子程序切换不是线程切换，而是由程序自身控制，因此，没有线程切换的开销，和多线程比，线程数量越多，协程的性能优势就越明显。</li>
+<li>第二大优势就是不需要多线程的锁机制，因为只有一个线程，也不存在同时写变量冲突，在协程中控制共享资源不加锁，只需要判断状态就好了，所以执行效率比多线程高很多。</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>常见的避免死锁的方法：</p>
+<ul>
+<li>避免一个线程同时获取多个锁。</li>
+<li>避免一个线程再锁内同时占用多个资源，尽量保证每个锁只占用一个资源。</li>
+<li>尝试使用定时锁<code>loco.tryLoc(timeout)</code>，这样即使死锁也能在timeout时间后释放。</li>
+<li>对于数据库锁，加锁和解锁必须在一个数据库连接里，否则会出现解锁失败的情况。</li>
+</ul>
+<h2 id="资源限制"><a href="#资源限制" class="headerlink" title="资源限制"></a>资源限制</h2><p>程序会受到<strong>硬件资源</strong>的限制（如：服务其带宽）或<strong>软件资源</strong>的限制（如：数据库的连接数、socket连接数等）。</p>
+<ol>
+<li><p>资源限制带来的问题</p>
+<p>如果并发执行串行代码时，由于资源受限，仍然在串行执行，这时候因为还增加了上下文切换和资源调度的额外开销，故而程序会跑得更慢。</p>
+</li>
+<li><p>如何解决资源受限的问题</p>
+<ul>
+<li>硬件资源受限：使用集群（<strong>多个机器同时处理，不同机器处理Hash之后的不同数据</strong>）</li>
+<li>软件资源受限：使用资源池（<strong>先向操作系统申请一些资源，对资源进行复用：用时直接向资源池申请，不用时交还给资源池</strong>）</li>
+</ul>
+</li>
+<li><p>在资源受限时进行并发编程</p>
+<p><strong>根据不同的资源限制调整程序的并发度。</strong></p>
 </li>
 </ol>
 
@@ -737,7 +884,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
