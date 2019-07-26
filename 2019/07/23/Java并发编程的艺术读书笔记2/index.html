@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Welcome to JianZhirui&#39;s Blog">
 <meta property="og:description" content="第二章 Java并发机制的底层实现原理Java代码通过java编译器编译成Java字节码，字节码被类加载器加载到JVM里，JVM执行字节码，最终转化为汇编指令在CPU上执行，Java中锁使用的并发机制依赖于JVM的实现和CPU的指令。 volatile  volatile是轻量级的synchronized。  1. 定义：   如果一个字段被声明成volatile，Java线程内存模型确保所有的线">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-23T02:41:58.608Z">
+<meta property="og:updated_time" content="2019-07-26T12:54:20.756Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第二章 Java并发机制的底层实现原理">
 <meta name="twitter:description" content="第二章 Java并发机制的底层实现原理Java代码通过java编译器编译成Java字节码，字节码被类加载器加载到JVM里，JVM执行字节码，最终转化为汇编指令在CPU上执行，Java中锁使用的并发机制依赖于JVM的实现和CPU的指令。 volatile  volatile是轻量级的synchronized。  1. 定义：   如果一个字段被声明成volatile，Java线程内存模型确保所有的线">
@@ -161,7 +161,7 @@
 <li><p>共享变量不会被频繁地写。</p>
 </li>
 </ul>
-<p>但是在Java 7中，并发编程更加智慧。</p>
+<p>但是在Java 7中，并发编程更加智慧（主要是运用了synchronized）。</p>
 <h2 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h2><p>Java中对于每一个对象都可以作为锁的三种具体表现形式：</p>
 <ul>
 <li><p>对于普通同步方法，锁是当前实例对象。</p>
@@ -174,11 +174,69 @@
 <blockquote>
 <p>JVM基于进入和退出Monitor对象来实现方法同步和代码块同步。</p>
 </blockquote>
+<blockquote>
+<p><strong>volatile和synchronized的区别</strong>:</p>
+<ol>
+<li>volatile本质是在告诉jvm当前变量在寄存器（工作内存）中的值是不确定的，需要从主存中读取； </li>
+<li>synchronized则是锁定当前变量，只有当前线程可以访问该变量，其他线程被阻塞住。</li>
+<li>volatile仅能使用在变量级别；synchronized则可以使用在变量、方法、和类级别的</li>
+<li>volatile仅能实现变量的修改可见性，不能保证原子性；而synchronized则可以保证变量的修改可见性和原子性</li>
+<li>volatile不会造成线程的阻塞；synchronized可能会造成线程的阻塞。</li>
+</ol>
+</blockquote>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><table>
+<thead>
+<tr>
+<th align="center">锁</th>
+<th align="center">优点</th>
+<th align="center">缺点</th>
+<th align="center">适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">偏向锁</td>
+<td align="center">枷锁和解锁不需要额外的消耗，和执行非同步方法相比仅存在纳秒级的差距</td>
+<td align="center">如果线程间存在锁竞争，会带来额外的锁撤销的消耗</td>
+<td align="center">只有一个线程访问同步代码块场景</td>
+</tr>
+<tr>
+<td align="center">轻量级锁</td>
+<td align="center">竞争的线程不会阻塞，提高了程序的相应速度</td>
+<td align="center">如果始终得不到锁竞争的线程，使得自旋会消耗CPU</td>
+<td align="center">1.追求响应时间<br>2.同步块执行速度非常快</td>
+</tr>
+<tr>
+<td align="center">重量级锁</td>
+<td align="center">线程竞争不使用自选，不会消耗CPU</td>
+<td align="center">线程阻塞，响应时间缓慢</td>
+<td align="center">1.追求吞吐量<br>2.同步块执行速度较长</td>
+</tr>
+</tbody></table>
+<h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><p>原子本意是<strong>不能被进一步分割的最小粒子</strong>（当然我们现在知道原子还能被分割为质子和中子，质子和中子还能被分割为夸克，但是这个概念提出时原子仍然是最小粒子，所以这个说法保留至今），而原子操作则是<strong>不可被中断的一个或者一系列操作</strong>。</p>
+<hr>
+<p>处理器提供两个机制来保证复杂的内存操作的原子性：</p>
+<ol>
+<li>总线锁定（简单来说就相当于一条线路本来是用来让所有的线程访问共享内存，但是一个被线程堵住，其余的线程就无法访问共享内存）</li>
+<li>缓存锁定（所谓“缓存锁定”是指内存区域如果被缓存在处理器的缓存行中，并且在Lock操作期间被锁定，那么当它执行锁操作回写到内存时，处理器不在总线上声言LOCK#信号，而是修改内部的内存地址，并允许它的缓存一致性机制来保证操作的原子性，因为缓存一致性机制会阻止同时修改由两个以上处理器缓存的内存区域数据，当其他处理器回写已被锁定的缓存行数据时，会使缓存行无效）</li>
+</ol>
+<h3 id="Java中如何实现原子操作"><a href="#Java中如何实现原子操作" class="headerlink" title="Java中如何实现原子操作"></a>Java中如何实现原子操作</h3><ol>
+<li><p>循环CAS</p>
+<p>带来的问题：</p>
+<ol>
+<li>ABA问题</li>
+<li>循环时间长开销大</li>
+<li>只能保证一个共享变量的原子性</li>
+</ol>
+</li>
+<li><p>锁机制</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本章为Java并发机制的底层实现，主要分析的是两个关键字volatile和synchronized并分析优劣，在汇编层面解释了并发原理，也理解了Java对象的对象头，锁就是存在对象头中，讲解了部分锁的适用场景。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://RyanUaa.github.io/2019/07/23/Java并发编程的艺术读书笔记2/" data-id="cjyf7pcub00030cu7has9pf8h" class="article-share-link">Share</a>
+      <a data-url="https://RyanUaa.github.io/2019/07/23/Java并发编程的艺术读书笔记2/" data-id="cjyf9w3zq0001bku78f93ajpw" class="article-share-link">Share</a>
       
       
     </footer>
