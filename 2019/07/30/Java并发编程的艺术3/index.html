@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Java并发编程的艺术读书笔记3 | Welcome to JianZhirui&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Java内存模型1. Java内存模型的基础在并发编程中，需要处理两个关键的问题 线程间如何通信（线程之间以何种机制来交换信息）  线程见如何同步（线程之间操作发生相对顺序的机制）   在命令式的编程中，线程之间的通信主要依靠内存共享和消息传递。在共享内存并发模型中，需要显式指定某个方法或代码需要在线程之间互斥执行。 Java的并发采用的是共享内存模型，Java线程之间的通信 总是隐式进行，整个通">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java并发编程的艺术读书笔记3">
+<meta property="og:url" content="https://RyanUaa.github.io/2019/07/30/Java并发编程的艺术3/index.html">
+<meta property="og:site_name" content="Welcome to JianZhirui&#39;s Blog">
+<meta property="og:description" content="Java内存模型1. Java内存模型的基础在并发编程中，需要处理两个关键的问题 线程间如何通信（线程之间以何种机制来交换信息）  线程见如何同步（线程之间操作发生相对顺序的机制）   在命令式的编程中，线程之间的通信主要依靠内存共享和消息传递。在共享内存并发模型中，需要显式指定某个方法或代码需要在线程之间互斥执行。 Java的并发采用的是共享内存模型，Java线程之间的通信 总是隐式进行，整个通">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564479552593&di=6d7180ea6c8b9e148a0f361e52173abf&imgtype=0&src=http%3A%2F%2Fd.ifengimg.com%2Fw600%2Fp0.ifengimg.com%2Fpmop%2F2018%2F0521%2F786A519E2751960BF3CCBEDE0E1C6FA7BCD27A54_size159_w694_h574.png">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564481949181&di=b65aad406c2b0c3bff727c82531e2199&imgtype=0&src=http%3A%2F%2Fimg.mp.sohu.com%2Fupload%2F20170718%2F266f5076a2cc4a8b863733008fbc048b_th.png">
+<meta property="og:updated_time" content="2019-07-30T07:36:33.180Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java并发编程的艺术读书笔记3">
+<meta name="twitter:description" content="Java内存模型1. Java内存模型的基础在并发编程中，需要处理两个关键的问题 线程间如何通信（线程之间以何种机制来交换信息）  线程见如何同步（线程之间操作发生相对顺序的机制）   在命令式的编程中，线程之间的通信主要依靠内存共享和消息传递。在共享内存并发模型中，需要显式指定某个方法或代码需要在线程之间互斥执行。 Java的并发采用的是共享内存模型，Java线程之间的通信 总是隐式进行，整个通">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564479552593&di=6d7180ea6c8b9e148a0f361e52173abf&imgtype=0&src=http%3A%2F%2Fd.ifengimg.com%2Fw600%2Fp0.ifengimg.com%2Fpmop%2F2018%2F0521%2F786A519E2751960BF3CCBEDE0E1C6FA7BCD27A54_size159_w694_h574.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Welcome to JianZhirui&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Welcome to JianZhirui&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://RyanUaa.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Java并发编程的艺术3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/30/Java并发编程的艺术3/" class="article-date">
+  <time datetime="2019-07-30T06:24:15.503Z" itemprop="datePublished">2019-07-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java并发编程的艺术读书笔记3
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h1><h2 id="1-Java内存模型的基础"><a href="#1-Java内存模型的基础" class="headerlink" title="1. Java内存模型的基础"></a>1. Java内存模型的基础</h2><h3 id="在并发编程中，需要处理两个关键的问题"><a href="#在并发编程中，需要处理两个关键的问题" class="headerlink" title="在并发编程中，需要处理两个关键的问题"></a>在并发编程中，需要处理两个关键的问题</h3><ol>
+<li><p>线程间如何通信（线程之间以何种机制来交换信息）</p>
+</li>
+<li><p>线程见如何同步（线程之间操作发生相对顺序的机制）</p>
+</li>
+</ol>
+<p>在命令式的编程中，线程之间的通信主要依靠内存共享和消息传递。在共享内存并发模型中，需要显式指定某个方法或代码需要在线程之间互斥执行。</p>
+<p><strong>Java的并发采用的是共享内存模型，Java线程之间的通信 总是隐式进行，整个通信过程对程序员完全透明。</strong></p>
+<h3 id="Java内存模型的抽象结构"><a href="#Java内存模型的抽象结构" class="headerlink" title="Java内存模型的抽象结构"></a>Java内存模型的抽象结构</h3><p>在Java中，所有实例域、静态域和数组元素都存储在堆内存中，堆内存在线程之间共享，局部变量、方法定义参数和异常处理参数不会再线程之间共享。线程之间的通信由Java内存模型JMM控制。线程之间的共享变量存储在主内存中，每个线程都有一个私有的本地内存（并不真实存在），本地内存中存储了线程读写共享变量的副本，如下图所示：<br><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564479552593&di=6d7180ea6c8b9e148a0f361e52173abf&imgtype=0&src=http%3A%2F%2Fd.ifengimg.com%2Fw600%2Fp0.ifengimg.com%2Fpmop%2F2018%2F0521%2F786A519E2751960BF3CCBEDE0E1C6FA7BCD27A54_size159_w694_h574.png" alt></p>
+<h3 id="从源代码到指令序列的重排序"><a href="#从源代码到指令序列的重排序" class="headerlink" title="从源代码到指令序列的重排序"></a>从源代码到指令序列的重排序</h3><p> 在执行程序时，为了提高性能，编译器和CPU常常会对指令进行重排序，分为以下3种类型：</p>
+<ol>
+<li><p>编译优化重排序。编译器在不改变单线程程序语义的前提下，可以重新安排语句执行顺序。</p>
+</li>
+<li><p>指令级并行的重排序。CPU采用了指令级并行技术将多条指令重叠执行。</p>
+</li>
+<li><p>内存系统的重排序。由于CPU使用cache和读/写缓冲区，因此加载和存储操作可能在乱序执行。</p>
+<p>从Java源代码到最终实际执行的指令序列，会分别经历上述三种 重排序。</p>
+</li>
+</ol>
+<h3 id="并发编程模型的分类"><a href="#并发编程模型的分类" class="headerlink" title="并发编程模型的分类"></a>并发编程模型的分类</h3><p>写缓冲区的好处：</p>
+<ol>
+<li><p>可以保证指令流水线持续运行。</p>
+</li>
+<li><p>可以避免由于处理器停顿下来等待向内存写入数据而产生的延迟。</p>
+</li>
+<li><p>通过以批处理的方式刷新写缓冲区，以及合并写缓冲区中对同一内存地址的多次写，减少对内存总线的占用。</p>
+</li>
+</ol>
+<p>但是：</p>
+<blockquote>
+<p>每个处理器上的写缓冲区，仅仅对它所在的处理器可见。</p>
+</blockquote>
+<p>这个特性会对内存操作的执行顺序产生重要的影响：<strong>处理器对内存的读/写操作的执行顺序，不一定与内存实际发生的读/写操作顺序一致！</strong></p>
+<p>由于现代的处理器都会使用写缓冲区，因此现代的处理器都会允许对写-读操作进行重排序。</p>
+<p>为了保证内存可见性，Java编译器在生成指令序列的适当位置会插入内存屏障指令来禁止特定类型CPU重排序。</p>
+<p>JMM把内存屏障分为四类：</p>
+<ol>
+<li>LoadLoad Barries</li>
+<li>StoreStore Barries</li>
+<li>LoadStore Barries</li>
+<li>StoreLoad Barries</li>
+</ol>
+<p>这些内存屏障都会保证指令执行的先后顺序，StoreLoad Barries是一个“全能型”的屏障，它同时具有其他三个屏障的效果。现代的多处理器大多支持该屏障。执行该屏障开销会很昂贵没因为挡墙处理器通常要把写缓冲区中的数据全部刷新到内存中。</p>
+<h3 id="happers-before"><a href="#happers-before" class="headerlink" title="happers-before"></a>happers-before</h3><p>在JMM中，如果一个操作对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。</p>
+<blockquote>
+<p>两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前。</p>
+</blockquote>
+<p><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564481949181&di=b65aad406c2b0c3bff727c82531e2199&imgtype=0&src=http%3A%2F%2Fimg.mp.sohu.com%2Fupload%2F20170718%2F266f5076a2cc4a8b863733008fbc048b_th.png" alt></p>
+<p>happens-before相当于对多个编译器和处理器的重排序规则进行了封装，它的规则简单易懂，避免程序员为了理解JMM提供的内存可见性保证而去学习复杂的重排序规则以及这些规则的具体实现方法。</p>
+<h2 id="2-重排序"><a href="#2-重排序" class="headerlink" title="2. 重排序"></a>2. 重排序</h2><p>重排序是指编译器和处理器为了优化程序性能而对指令序列进行重新排序的一种手段。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://RyanUaa.github.io/2019/07/30/Java并发编程的艺术3/" data-id="cjypiltsx0002nou7ia1kpty0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/30/Java并发编程的艺术读书笔记3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Java内存模型
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/23/Java并发编程的艺术2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">第二章 Java并发机制的底层实现原理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/07/30/Java并发编程的艺术读书笔记3/">Java内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/30/Java并发编程的艺术3/">Java并发编程的艺术读书笔记3</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/23/Java并发编程的艺术2/">第二章 Java并发机制的底层实现原理</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/21/折腾博客的第一天/">折腾博客的第一天</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/21/Java并发编程的艺术1/">第一章 并发编程的挑战</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 JianZhirui<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
